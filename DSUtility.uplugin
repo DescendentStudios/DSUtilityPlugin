@@ -14,7 +14,7 @@
 		{
 			"Name": "DSUtility",
 			"Type": "Developer",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "PreDefault"
 		}
 	],
 	"EnabledByDefault": false,

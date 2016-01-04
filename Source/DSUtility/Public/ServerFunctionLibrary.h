@@ -22,4 +22,6 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Server Function Library")
 	static bool IsRequestingExit();
 
+	UFUNCTION(BlueprintPure, Category = "Server Function Library")
+	static int32 GetProcessId();
 };

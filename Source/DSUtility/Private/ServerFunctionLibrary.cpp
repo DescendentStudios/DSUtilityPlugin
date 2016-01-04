@@ -2,12 +2,12 @@
 
 #include "DSUtilityPrivatePCH.h"
 
-#ifdef POSIX
+#if PLATFORM_LINUX || PLATFORM_MAC
 #include <sys/types.h>
 #include <unistd.h>
 #endif
 
-#ifdef WIN32
+#if PLATFORM_WINDOWS
 #include <Processthreadsapi.h>
 #endif
 
@@ -32,9 +32,9 @@ bool UServerFunctionLibrary::IsRequestingExit()
 
 int32 UServerFunctionLibrary::GetProcessId()
 {
-#if defined(POSIX)
+#if PLATFORM_LINUX || PLATFORM_MAC
 	return getpid();
-#elif defined(WIN32) 
+#elif PLATFORM_WINDOWS
 	return GetCurrentProcessId();
 #else
 #warning getpid unsupported

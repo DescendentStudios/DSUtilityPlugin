@@ -12,20 +12,26 @@ FString UMapRotator::GetNextMapInRotation(UObject* WorldContextObject)
 	UWorld* world = WorldContextObject->GetWorld();
 	check(world);
 	FString currentMap = world->GetMapName();
-	int32 mapIndex = -1;
+	UE_LOG(LogTemp, VeryVerbose, TEXT("Current map is %s."), *currentMap);
+	int32 prevIndex = -1;
 
 	for (int32 i = 0; i < MapRotation.Num(); i++)
 	{
-		if (MapRotation[i].EndsWith(currentMap))
+		UE_LOG(LogTemp, VeryVerbose, TEXT("MapRotation[%d] is %s."), i, *(MapRotation[i]));
+		if (currentMap.Contains(MapRotation[i], ESearchCase::Type::IgnoreCase,ESearchDir::Type::FromStart))
 			{
-				mapIndex = i;
+				prevIndex = i;
 				break;
 			}
+		else
+		{
+			UE_LOG(LogTemp, VeryVerbose, TEXT("%s does not contain %s."), *currentMap, *(MapRotation[i]));
+		}
 	}
 
 	if (MapRotation.Num() > 0)
 	{
-		mapIndex = (mapIndex + 1) % MapRotation.Num();
+		int32 mapIndex = (prevIndex + 1) % MapRotation.Num();
 		if (mapIndex >= 0 && mapIndex < MapRotation.Num())
 		{
 			return MapRotation[mapIndex];
@@ -35,6 +41,16 @@ FString UMapRotator::GetNextMapInRotation(UObject* WorldContextObject)
 	UE_LOG(LogTemp, Warning, TEXT("Next map not available; restarting current map."));
 
 	return "?restart";
+}
+
+FString UMapRotator::PickGameMode()
+{
+	if (GameModes.Num() == 0)
+	{
+		return "DefaultGameMode";
+	}
+	int32 idx = FMath::RandRange(0, GameModes.Num() - 1);
+	return GameModes[idx];
 }
 
 

@@ -18,9 +18,15 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Map Rotation",meta = (WorldContext = "WorldContextObject"))
 	FString GetNextMapInRotation(UObject* WorldContextObject);
 
+	UFUNCTION(BlueprintPure, Category = "Map Rotation")
+	FString PickGameMode();
+
 	UFUNCTION(BlueprintCallable, Category = "Map Rotation", meta = (WorldContext = "WorldContextObject"))
 	static UMapRotator* CreateMapRotator(UObject* WorldContextObject);
 	
 	UPROPERTY(Config)
 	TArray<FString> MapRotation;
+
+	UPROPERTY(Config)
+	TArray<FString> GameModes;
 };
